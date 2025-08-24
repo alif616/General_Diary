@@ -3,13 +3,419 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Online General Diary - Bangladesh Police</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <h1>This is Alif</h1>
+    <header>
+    <div class="logo-section">
+        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTIgM3Y0bTAgNGg0TTUgMTloMTRhMiAyIDAgMCAwIDEuODQtMi43NUwxMy43NCA0LjI2YTIgMiAwIDAgMC0zLjQ4IDBMNS4xNiAxNi4yNUEyIDIgMCAwIDAgNSAxOXoiPjwvcGF0aD48L3N2Zz4=" alt="Logo">
+        <span>Online General Diary - Bangladesh Police</span>
+    </div>
+    <div class="nav-section">
+        <a class="signin-btn"><i class="fas fa-sign-in-alt"></i>Sign In</a>
+        <a class="contact-btn"><i class="fas fa-envelope"></i>Contact Us</a>
+        <a class="faq-btn"><i class="fas fa-question-circle"></i>FAQs</a>
+        <a class="about-btn"><i class="fas fa-info-circle"></i>About Us</a>
+    </div>
+</header>
+
+<!-- Main Content Area -->
+<section id="hero">
+    <h2>Online General Diary System</h2>
+    <p class="hero-subtitle">A digital initiative by Bangladesh Police to serve citizens better with transparency and efficiency</p>
+    
+    <div class="guideline-card">
+        <p>You can use this website to file complaints with the police regarding lost or found property, or any other relevant matter. 
+        The concerned police station will take necessary steps based on your complaint type and inform you accordingly.</p>
+
+        <h3><i class="fas fa-list-ol"></i>Complaint Process</h3>
+        <ul>
+            <li>If your complaint qualifies as a General Diary (GD), you will receive a digital copy with GD number and details of the investigating officer.</li>
+            <li>If your complaint qualifies as a case (cognizable offense), you will need to appear at the police station with a printed copy or complaint code.</li>
+        </ul>
+
+        <h3><i class="fas fa-info-circle"></i>Required Information</h3>
+        <ul>
+            <li>National ID Number</li>
+            <li>Active Mobile Number</li>
+            <li>Recent Photograph</li>
+            <li>Details of the incident</li>
+        </ul>
+
+        <h3><i class="fas fa-star"></i>Benefits of Online GD System</h3>
+        <ul>
+            <li>Easy way to report complaints to police from anywhere</li>
+            <li>Check latest complaint status in real-time</li>
+            <li>Communicate with investigating officer online</li>
+            <li>Download and share GD copies digitally</li>
+            <li>Reduced processing time and paperwork</li>
+        </ul>
+    </div>
+
+    <button id="registerBtn"><i class="fas fa-user-plus"></i> Register Now</button>
+</section>
+
+<!-- Stats Section -->
+<div class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <div class="stat-number">15,872+</div>
+            <div class="stat-text">GDs Filed Online</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">98%</div>
+            <div class="stat-text">User Satisfaction</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">3-4 Hours</div>
+            <div class="stat-text">Average Processing Time</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">500+</div>
+            <div class="stat-text">Police Stations Connected</div>
+        </div>
+    </div>
+</div>
+
+<!-- User Dashboard (Initially Hidden) -->
+<div class="user-dashboard">
+    <div class="dashboard-header">
+        <div class="welcome-message">Welcome, <span id="userName">User</span>!</div>
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</button>
+    </div>
+    
+    <div class="dashboard-tabs">
+        <button class="tab-btn active" data-tab="file-gd"><i class="fas fa-plus-circle"></i> File New GD</button>
+        <button class="tab-btn" data-tab="gd-history"><i class="fas fa-history"></i> GD History</button>
+        <button class="tab-btn" data-tab="profile"><i class="fas fa-user"></i> Profile</button>
+    </div>
+    
+    <div class="tab-content active" id="file-gd">
+        <!-- GD Form Container -->
+        <div class="gd-form-container">
+            <h2>General Diary Form</h2>
+            <form id="gdForm">
+                <div class="form-section">
+                    <h3><i class="fas fa-user"></i> Personal Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fullName">Full Name</label>
+                            <input type="text" id="fullName" name="fullName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fatherName">Father's Name</label>
+                            <input type="text" id="fatherName" name="fatherName" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="motherName">Mother's Name</label>
+                            <input type="text" id="motherName" name="motherName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nid">National ID Number</label>
+                            <input type="text" id="nid" name="nid" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="address">Permanent Address</label>
+                            <textarea id="address" name="address" required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-exclamation-circle"></i> Incident Details</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incidentType">Type of Incident</label>
+                            <select id="incidentType" name="incidentType" required>
+                                <option value="">Select Incident Type</option>
+                                <option value="lost">Lost Property</option>
+                                <option value="found">Found Property</option>
+                                <option value="threat">Threat/Harassment</option>
+                                <option value="accident">Accident</option>
+                                <option value="missing">Missing Person</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="incidentDate">Date of Incident</label>
+                            <input type="date" id="incidentDate" name="incidentDate" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incidentLocation">Location of Incident</label>
+                            <input type="text" id="incidentLocation" name="incidentLocation" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="policeStation">Nearest Police Station</label>
+                            <select id="policeStation" name="policeStation" required>
+                                <option value="">Select Police Station</option>
+                                <option value="dhaka">Dhaka Metropolitan</option>
+                                <option value="chattogram">Chattogram Metropolitan</option>
+                                <option value="khulna">Khulna Metropolitan</option>
+                                <option value="rajshahi">Rajshahi Metropolitan</option>
+                                <option value="sylhet">Sylhet Metropolitan</option>
+                                <option value="barishal">Barishal Metropolitan</option>
+                                <option value="rangpur">Rangpur Metropolitan</option>
+                                <option value="mymensingh">Mymensingh Metropolitan</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="incidentDetails">Detailed Description of Incident</label>
+                            <textarea id="incidentDetails" name="incidentDetails" placeholder="Please provide as much detail as possible about what happened..." required></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3><i class="fas fa-paperclip"></i> Additional Information</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="witness">Witness Information (if any)</label>
+                            <textarea id="witness" name="witness" placeholder="Name, address and contact information of any witnesses..."></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="documents">Upload Supporting Documents (if any)</label>
+                            <input type="file" id="documents" name="documents" multiple>
+                            <small>You can upload multiple files (Max 5MB each)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit"><i class="fas fa-paper-plane"></i> Submit General Diary</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="tab-content" id="gd-history">
+        <h2><i class="fas fa-history"></i> Your GD History</h2>
+        <p>No previous General Diaries found. Once you file a GD, it will appear here.</p>
+        <div class="placeholder-history">
+            <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjQgMjQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2RkZCIgc3Ryb2tlLXdpZHRoPSIxIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xNCAyS42YTIuMjYgMi4yNiAwIDAgMC0yIDJuMDl2MTQuNWEyLjI2IDIuMjYgMCAwIDAgMiAyaDExLjhhMi4yNiAyLjI2IDAgMCAwIDItMlY3LjkyYTIuMjYgMi4yNiAwIDAgMC0uNjEtMS42MkExOS45IDE5LjkgMCAwIDAgMTQgMi56Ij48L3BhdGg+PHBvbHlsaW5lIHBvaW50cz0iMTQgMiAxNCA4IDIwIDgiPjwvcG9seWxpbmU+PGxpbmUgeDE9IjkiIHkxPSIxMyIgeDI9IjE1IiB5Mj0iMTMiPjwvbGluZT48bGluZSB4MT0iOSIgeTE9IjE3IiB4Mj0iMTUiIHkyPSIxNyI+PC9saW5lPjwvc3ZnPg==" alt="No History" width="100" style="margin: 20px auto; display: block; opacity: 0.5;">
+        </div>
+    </div>
+    
+    <div class="tab-content" id="profile">
+        <h2><i class="fas fa-user"></i> Your Profile</h2>
+        <div class="profile-info">
+            <p><strong>Name:</strong> <span id="profileName">User Name</span></p>
+            <p><strong>Email:</strong> <span id="profileEmail">user@example.com</span></p>
+            <p><strong>Phone:</strong> <span id="profilePhone">+8801XXXXXXXXX</span></p>
+            <p><strong>NID:</strong> <span id="profileNid">XXXXXXXXXXXX</span></p>
+            <p><strong>Address:</strong> <span id="profileAddress">User's Address</span></p>
+        </div>
+        <button style="margin-top: 20px; background: var(--secondary);" onclick="alert('Edit profile functionality would open here')"><i class="fas fa-edit"></i> Edit Profile</button>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('registerModal')">&times;</span>
+        <h3>Registration Form</h3>
+        <form id="registerForm">
+            <div class="form-group">
+                <label>First Name</label>
+                <input type="text" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input type="text" placeholder="Last Name" required>
+            </div>
+            <div class="form-group">
+                <label>NID Number</label>
+                <input type="number" placeholder="NID Number" required>
+            </div>
+            <div class="form-group">
+                <label>Father's Name</label>
+                <input type="text" placeholder="Father's Name" required>
+            </div>
+            <div class="form-group">
+                <label>Mother's Name</label>
+                <input type="text" placeholder="Mother's Name" required>
+            </div>
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="number" placeholder="Phone Number" required>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Password" required>
+            </div>
+            <div class="form-group">
+                <label>Upload Photo</label>
+                <input type="file" accept="image/*" required>
+            </div>
+            <button type="submit"><span class="spinner" id="registerSpinner"></span> Register</button>
+        </form>
+        <p class="info-text">
+            By registering, you agree to our Terms of Service and Privacy Policy.
+            Your data will be kept secure and used only for processing General Diaries.
+        </p>
+        <a onclick="switchModal('registerModal','signinModal')">Already have an account? Sign In</a>
+    </div>
+</div>
+
+<!-- Sign In Modal -->
+<div id="signinModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('signinModal')">&times;</span>
+        <h3>Sign In</h3>
+        <form id="signinForm">
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" placeholder="Email" required>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" placeholder="Password" required>
+            </div>
+            <button type="submit"><span class="spinner" id="loginSpinner"></span> Login</button>
+        </form>
+        <p class="info-text">
+            Sign in to access your account and file or track General Diaries securely.
+        </p>
+        <a onclick="switchModal('signinModal','registerModal')">Don't have an account? Register</a>
+    </div>
+</div>
+
+<!-- About Us Modal -->
+<div id="aboutModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('aboutModal')">&times;</span>
+        <h3>About Us</h3>
+        <p>
+            The Online General Diary system is an initiative by Bangladesh Police to make police services more transparent, accessible, 
+            and citizen-friendly. This platform allows you to submit General Diaries online, 
+            track complaint status, and communicate directly with investigating officers.
+        </p>
+        <p>
+            Our mission is to leverage technology to improve police services and build stronger trust between the police force and the community.
+            This system reduces the need for physical visits to police stations and speeds up the process of filing and tracking General Diaries.
+        </p>
+    </div>
+</div>
+
+<!-- FAQs Modal -->
+<div id="faqModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('faqModal')">&times;</span>
+        <h3>Frequently Asked Questions</h3>
+        <div class="faq-item">
+            <p><b>Q1:</b> What is a General Diary (GD)?</p>
+            <p><b>Ans:</b> A GD is a record kept at a police station for non-cognizable incidents or lost property.</p>
+        </div>
+        <div class="faq-item">
+            <p><b>Q2:</b> Can I file a GD from anywhere?</p>
+            <p><b>Ans:</b> Yes, as long as you have internet access and valid identification.</p>
+        </div>
+        <div class="faq-item">
+            <p><b>Q3:</b> Is my personal information safe?</p>
+            <p><b>Ans:</b> Absolutely, your information is secured and only used for official purposes.</p>
+        </div>
+        <div class="faq-item">
+            <p><b>Q4:</b> How long does it take to process a GD?</p>
+            <p><b>Ans:</b> Typically, GDs are processed within 24-48 hours after submission.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Contact Us Modal -->
+<div id="contactModal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('contactModal')">&times;</span>
+        <h3>Contact Us</h3>
+        <form id="contactForm">
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <label>Your Email</label>
+                <input type="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <label>Your Message</label>
+                <textarea placeholder="Your Message" rows="4" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+        </form>
+    </div>
+</div>
+
+<!-- Toast Notification -->
+<div class="toast" id="toast">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Operation completed successfully!</span>
+</div>
+
+<!-- ===== Footer Section ===== -->
+<footer>
+  <div class="footer-container">
+    <div class="footer-about">
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIj48cGF0aCBkPSJNMTIgM3Y0bTAgNGg0TTUgMTloMTRhMiAyIDAgMCAwIDEuODQtMi43NUwxMy43NCA0LjI2YTIgMiAwIDAgMC0zLjQ4IDBMNS4xNiAxNi4yNUEyIDIgMCAwIDAgNSAxOXoiPjwvcGF0aD48L3N2Zz4=" alt="Logo">
+      <h3>Online General Diary</h3>
+      <p>Ensuring transparency, trust and faster police services for citizens of Bangladesh through digital GD system.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+        <li><a class="about-btn"><i class="fas fa-info-circle"></i> About Us</a></li>
+        <li><a class="faq-btn"><i class="fas fa-question-circle"></i> FAQs</a></li>
+        <li><a class="contact-btn"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact Info</h4>
+      <p><i class="fas fa-map-marker-alt"></i> Police Headquarters, Dhaka, Bangladesh</p>
+      <p><i class="fas fa-phone"></i> +880 1234 567 890</p>
+      <p><i class="fas fa-envelope"></i> support@gd.gov.bd</p>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        <a href="#"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2025 Online General Diary | All Rights Reserved. | Developed with <i class="fas fa-heart" style="color: #dc3545;"></i> for Bangladesh Police</p>
+  </div>
+</footer> 
+<script src="script.js"></script>   
 </body>
 </html>
-
-
-
 
