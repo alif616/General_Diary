@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // server.js
 import express from "express";
 import mysql from "mysql2";
@@ -81,3 +82,6 @@ app.post("/api/contact", (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+=======
+
+>>>>>>> f436bb14abf964172fc7c6cc1850b6fb6bdaf8a7
