@@ -1,4 +1,3 @@
-
 // Global variables
 let currentUser = null;
 
@@ -18,6 +17,9 @@ const userNameSpan = document.getElementById("userName");
 const tabBtns = document.querySelectorAll(".tab-btn");
 const tabContents = document.querySelectorAll(".tab-content");
 const toast = document.getElementById("toast");
+
+// API Base URL
+const API_URL = "http://localhost:5000/api";
 
 // Show modals
 registerBtn.addEventListener("click", () => registerModal.classList.add("show"));
@@ -47,11 +49,8 @@ window.addEventListener("click", e => {
 // Tab switching
 tabBtns.forEach(btn => {
     btn.addEventListener("click", () => {
-        // Remove active class from all tabs and contents
         tabBtns.forEach(b => b.classList.remove("active"));
         tabContents.forEach(c => c.classList.remove("active"));
-        
-        // Add active class to clicked tab and corresponding content
         btn.classList.add("active");
         const tabId = btn.getAttribute("data-tab");
         document.getElementById(tabId).classList.add("active");
@@ -60,110 +59,151 @@ tabBtns.forEach(btn => {
 
 // Show toast notification
 function showToast(message, type = "success") {
-    const toast = document.getElementById("toast");
     const toastMessage = document.getElementById("toastMessage");
-    
     toastMessage.textContent = message;
-    
-    // Change color based on type
-    if (type === "error") {
-        toast.style.background = "var(--danger)";
-    } else if (type === "warning") {
-        toast.style.background = "var(--warning)";
-    } else {
-        toast.style.background = "var(--success)";
-    }
-    
+    if (type === "error") toast.style.background = "var(--danger)";
+    else if (type === "warning") toast.style.background = "var(--warning)";
+    else toast.style.background = "var(--success)";
     toast.classList.add("show");
-    
-    // Hide after 3 seconds
-    setTimeout(() => {
-        toast.classList.remove("show");
-    }, 3000);
+    setTimeout(() => toast.classList.remove("show"), 3000);
 }
 
-// Form validation and submission
-document.getElementById("registerForm").addEventListener("submit", function(e){
+// ✅ Registration API Call
+document.getElementById("registerForm").addEventListener("submit", async function(e){
     e.preventDefault();
-    const formData = new FormData(this);
     const spinner = document.getElementById("registerSpinner");
-    
-    // Show loading spinner
     spinner.style.display = "inline-block";
-    
-    // Simulate registration after a short delay
-    setTimeout(() => {
-        currentUser = {
-            firstName: this.querySelector("input[type='text']").value,
-            email: this.querySelector("input[type='email']").value,
-            phone: this.querySelector("input[type='number']").value,
-            nid: this.querySelectorAll("input[type='number']")[1].value
-        };
-        
-        // Hide spinner
+
+    const formData = {
+        firstName: this.querySelector("input[name='firstName']").value,
+        lastName: this.querySelector("input[name='lastName']").value,
+        fatherName: this.querySelector("input[name='fatherName']").value,
+        motherName: this.querySelector("input[name='motherName']").value,
+        nid: this.querySelector("input[name='nid']").value,
+        phone: this.querySelector("input[name='phone']").value,
+        email: this.querySelector("input[name='email']").value,
+        password: this.querySelector("input[name='password']").value,
+    };
+
+    try {
+        const res = await fetch(`${API_URL}/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData)
+        });
+        const data = await res.json();
         spinner.style.display = "none";
-        
-        showToast("Registration successful! Welcome to Online GD System.");
-        closeModal('registerModal');
-        showUserDashboard();
-        this.reset();
-    }, 1500);
+        if(res.ok){
+            // Include returned userId
+            currentUser = { ...formData, id: data.userId };
+            showToast(data.message);
+            closeModal('registerModal');
+            showUserDashboard();
+            this.reset();
+        } else {
+            showToast(data.error, "error");
+        }
+    } catch (err) {
+        spinner.style.display = "none";
+        showToast("Server error!", "error");
+    }
 });
 
-document.getElementById("signinForm").addEventListener("submit", function(e){
+// ✅ Login API Call
+document.getElementById("signinForm").addEventListener("submit", async function(e){
     e.preventDefault();
-    const email = this.querySelector("input[type='email']").value;
-    const password = this.querySelector("input[type='password']").value;
     const spinner = document.getElementById("loginSpinner");
-    
-    // Show loading spinner
     spinner.style.display = "inline-block";
-    
-    // Simulate login after a short delay
-    setTimeout(() => {
-        currentUser = {
-            firstName: email.split('@')[0],
-            email: email,
-            phone: "+8801XXXXXXXXX",
-            nid: "XXXXXXXXXXXX"
-        };
-        
-        // Hide spinner
+
+    const email = this.querySelector("input[name='email']").value;
+    const password = this.querySelector("input[name='password']").value;
+
+    try {
+        const res = await fetch(`${API_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
         spinner.style.display = "none";
-        
-        showToast("Login successful! Welcome back.");
-        closeModal('signinModal');
-        showUserDashboard();
-        this.reset();
-    }, 1500);
+        if(res.ok){
+            currentUser = data.user;
+            showToast("Login successful! Welcome back.");
+            closeModal('signinModal');
+            showUserDashboard();
+            this.reset();
+        } else {
+            showToast(data.error, "error");
+        }
+    } catch (err) {
+        spinner.style.display = "none";
+        showToast("Server error!", "error");
+    }
 });
 
-document.getElementById("contactForm").addEventListener("submit", function(e){
+// ✅ Contact Form API Call
+document.getElementById("contactForm").addEventListener("submit", async function(e){
     e.preventDefault();
-    showToast("Your message has been sent successfully! We'll contact you soon.");
-    closeModal('contactModal');
-    this.reset();
+    const name = this.querySelector("input[name='name']").value;
+    const email = this.querySelector("input[name='email']").value;
+    const message = this.querySelector("textarea[name='message']").value;
+
+    try {
+        const res = await fetch(`${API_URL}/contact`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, message })
+        });
+        const data = await res.json();
+        if(res.ok){
+            showToast(data.message);
+            closeModal('contactModal');
+            this.reset();
+        } else {
+            showToast(data.error, "error");
+        }
+    } catch (err) {
+        showToast("Server error!", "error");
+    }
 });
 
-// GD Form Submission
-document.getElementById("gdForm").addEventListener("submit", function(e){
+// ✅ GD Form API Call
+document.getElementById("gdForm").addEventListener("submit", async function(e){
     e.preventDefault();
-    
-    // Show loading state
     const submitBtn = this.querySelector("button[type='submit']");
     const originalText = submitBtn.innerHTML;
     submitBtn.innerHTML = '<span class="spinner"></span> Processing...';
     submitBtn.disabled = true;
-    
-    // Simulate form submission
-    setTimeout(() => {
-        showToast("Your General Diary has been submitted successfully! GD Number: #2023-GD-98765");
-        this.reset();
-        
-        // Restore button
-        submitBtn.innerHTML = originalText;
-        submitBtn.disabled = false;
-    }, 2000);
+
+    const gdData = {
+        userId: currentUser?.id,
+        incidentType: this.querySelector("input[name='incidentType']").value,
+        incidentDate: this.querySelector("input[name='incidentDate']").value,
+        incidentLocation: this.querySelector("input[name='incidentLocation']").value,
+        policeStation: this.querySelector("input[name='policeStation']").value,
+        incidentDetails: this.querySelector("textarea[name='incidentDetails']").value,
+        witness: this.querySelector("input[name='witness']").value
+    };
+
+    try {
+        const res = await fetch(`${API_URL}/gd`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(gdData)
+        });
+        const data = await res.json();
+        if(res.ok){
+            showToast(data.message + ` GD Number: #${data.gdId}`);
+            this.reset();
+        } else {
+            showToast(data.error, "error");
+        }
+    } catch (err) {
+        showToast("Server error!", "error");
+    }
+
+    submitBtn.innerHTML = originalText;
+    submitBtn.disabled = false;
 });
 
 // Logout functionality
@@ -179,32 +219,12 @@ function showUserDashboard() {
     heroSection.style.display = "none";
     userDashboard.style.display = "block";
     gdFormContainer.style.display = "block";
-    
     if (currentUser) {
         userNameSpan.textContent = currentUser.firstName;
-        
-        // Update profile information
         document.getElementById("profileName").textContent = currentUser.firstName;
         document.getElementById("profileEmail").textContent = currentUser.email;
-        document.getElementById("profilePhone").textContent = currentUser.phone;
-        document.getElementById("profileNid").textContent = currentUser.nid;
+        document.getElementById("profilePhone").textContent = currentUser.phone || "";
+        document.getElementById("profileNid").textContent = currentUser.nid || "";
         document.getElementById("profileAddress").textContent = "Dhaka, Bangladesh";
     }
 }
-
-// Check if user is already logged in (for demo purposes)
-// In a real application, this would check localStorage or a session
-window.addEventListener('DOMContentLoaded', function() {
-    // Check if we should show the dashboard (for demo purposes)
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('loggedin') === 'true') {
-        currentUser = { 
-            firstName: "Demo User", 
-            email: "demo@example.com",
-            phone: "+8801712345678",
-            nid: "1990123456789"
-        };
-        showUserDashboard();
-    }
-});
-
