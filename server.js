@@ -1,5 +1,4 @@
 <<<<<<< HEAD
-// server.js
 import express from "express";
 import mysql from "mysql2";
 import bcrypt from "bcrypt";
